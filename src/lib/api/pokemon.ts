@@ -1,6 +1,20 @@
 import pokeApi from "."
 
-export const getPokemon = async () => {
-    const res = await pokeApi.get('')
-    return res;
+export type PokemonQueryType = {
+    limit: number;
+    offset: number;
+}
+
+export type PokemonDataType = {
+    
+}
+
+export const getPokemon = async ({ limit, offset }: PokemonQueryType) => {
+    const res = await pokeApi.get('/pokemon/', {
+        params: {
+            limit,
+            offset
+        }
+    })
+    return res.data;
 }
