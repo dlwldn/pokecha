@@ -25,5 +25,4 @@ const Wrapper = styled.div`
 `
 const Content = styled.div`
     width: 60%;
-    background: rgba(0, 0, 0, 0.6);
 `
