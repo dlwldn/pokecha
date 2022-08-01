@@ -1,7 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 import { PokemonDetailData } from "../../lib/store/server/pokemon";
 import palette, { Palette } from "../../style/palette";
+import theme from "../../style/theme";
 
 type Props = {
     pokemon: PokemonDetailData;
@@ -17,7 +17,7 @@ const PokemonCard = ({ pokemon }: Props) => {
                 </div>
             </Name>
             <Image>
-                <img src={pokemon.image} alt="" />
+                <img src={pokemon.image} alt={`${pokemon.name} 스티커`} />
             </Image>
             <Tag>
                 <span>@Pokémon</span>
@@ -35,7 +35,7 @@ const Card = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid #eee;
+    border: 1px solid ${palette.gray1};
     border-radius: 5px;
     transition: 0.3s;
     cursor: pointer;
@@ -49,9 +49,7 @@ const Name = styled.div<{ type: keyof Palette }>`
     margin-bottom: 10px;
     font-weight: 700;
     > div {
-        display: inline-block;
-        box-shadow: 1px 1px 3px #bfbfbf;
-        border-radius: 15px;
+        ${theme.tagShadow};
         font-size: 13px;
         > span {
             display: inline-block;
@@ -60,15 +58,13 @@ const Name = styled.div<{ type: keyof Palette }>`
         > span:nth-of-type(1) {
             border-radius: 15px;
             background-color: ${({ type }) => type && palette[type]};
-            color: #fff;
-        }
-        > span:nth-of-type(2) {
+            color: ${palette.white};
         }
     }
 `;
 const Image = styled.div`
-    width: 150px;
-    height: 150px;
+    width: 160px;
+    height: 160px;
     padding: 10px;
     img {
         width: 100%;
@@ -80,10 +76,8 @@ const Tag = styled.div`
     text-align: right;
     font-weight: 700;
     > span {
-        display: inline-block;
+        ${theme.tagShadow};
         padding: 3px 5px;
-        box-shadow: 1px 1px 3px #bfbfbf;
-        border-radius: 15px;
         font-size: 12px;
     }
 `;

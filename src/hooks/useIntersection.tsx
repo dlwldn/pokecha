@@ -1,4 +1,4 @@
-import { RefObject, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const defaultOption = {
     root: null,
@@ -7,12 +7,8 @@ const defaultOption = {
 };
 
 export default function useIntersection(
-    elementRef: RefObject<Element>,
-    option?: {
-        root: null;
-        threshold: number;
-        rootMargin: string;
-    }
+    element: Element | null,
+    option?: IntersectionObserverInit
 ) {
     const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null);
     const checkIntersection: IntersectionObserverCallback = useCallback(
@@ -27,18 +23,18 @@ export default function useIntersection(
     );
 
     useEffect(() => {
-        if (!elementRef.current) return;
+        if (!element) return;
 
         const observer = new IntersectionObserver(checkIntersection, {
             ...defaultOption,
             ...option,
         });
-        observer.observe(elementRef.current);
+        observer.observe(element);
 
         return () => {
             observer && observer.disconnect();
         };
-    }, [elementRef.current]);
+    }, [element]);
 
     return entry;
 }

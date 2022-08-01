@@ -1,9 +1,10 @@
-import pokeApi from "."
+import pokeApi from ".";
+import { DEFAULT_POKEMON_LIST_LIMIT_COUNT } from "../constant";
 
 export type PokemonQueryType = {
     limit: number;
     offset: number;
-}
+};
 
 export type PokemonDataType = {
     count: number;
@@ -12,13 +13,12 @@ export type PokemonDataType = {
     results: {
         name: string;
         url: string;
-    }
-}
+    };
+};
 
 export type PokemonDetailQueryType = {
-    limit: number;
-    offset: number;
-}
+    ids: number[];
+};
 
 export type PokemonDetailApiDataType = {
     id: number;
@@ -30,33 +30,35 @@ export type PokemonDetailApiDataType = {
         type: {
             name: string;
             url: string;
-        }
+        };
     }[];
     sprites: {
         other: {
-            'official-artwork': {
-                'front_default': string;
-            }
-        }
+            "official-artwork": {
+                front_default: string;
+            };
+        };
     };
-}
+};
 
 export const getPokemon = async ({ limit, offset }: PokemonQueryType) => {
-    const res = await pokeApi.get('/pokemon/', {
+    const res = await pokeApi.get("/pokemon/", {
         params: {
             limit,
-            offset
-        }
-    })
+            offset,
+        },
+    });
     return res.data;
-}
+};
 
-export const getPokemonDetail = async ({ limit, offset }: PokemonDetailQueryType) => {
-    const getDetailPokemon = Array.from({ length: limit }).map((pokemon, idx) => {
-        return pokeApi.get(`/pokemon/${offset + idx}`)
-    })
-    const res = await Promise.all(getDetailPokemon).then((res)=> {
-        return res.map(item => item.data)
-    })
+export const getPokemonDetail = async ({
+    ids,
+}: PokemonDetailQueryType) => {
+    const getDetailPokemon = ids.map((id) => {
+        return pokeApi.get(`/pokemon/${id}`);
+    });
+    const res = await Promise.all(getDetailPokemon).then((res) => {
+        return res.map((item) => item.data);
+    });
     return res;
-}
+};

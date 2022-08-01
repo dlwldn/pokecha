@@ -1,70 +1,60 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
 import useIntersection from "../../hooks/useIntersection";
+import { DEFAULT_POKEMON_LIST_LIMIT_COUNT } from "../../lib/constant";
 import {
     PokemonDetailData,
     usePokemonDetail,
 } from "../../lib/store/server/pokemon";
+import List from "../common/List";
+import Skeleton from "../common/Skeleton";
 import PokemonCard from "./PokemonCard";
 
-type Props = {
-    limit: number;
-    offset: number;
-};
-
-const PokemonList = ({ limit, offset }: Props) => {
+const PokemonList = () => {
     const {
         data: pokemonDetailList,
         isLoading,
         isFetchingNextPage,
         hasNextPage,
         fetchNextPage,
-    } = usePokemonDetail({ limit, offset }, { staleTime: 36000 });
-    const observerRef = useRef<HTMLDivElement>(null);
-    const entry = useIntersection(observerRef);
+    } = usePokemonDetail(
+        Array.from({ length: DEFAULT_POKEMON_LIST_LIMIT_COUNT }).map(
+            (_, idx) => idx + 1
+        ),
+        { staleTime: 36000 }
+    );
+    const [intersectionTargetElement, setIntersectionTargetElement] =
+        useState<HTMLDivElement | null>(null);
+    const entry = useIntersection(intersectionTargetElement);
 
-    // const handleObserver: IntersectionObserverCallback = useCallback(
-    //     (entries) => {
-    //         const target = entries[0];
-    //         if (target.isIntersecting) {
-    //             fetchNextPage();
-    //         }
-    //     },
-    //     []
-    // );
-
-    const renderPokemonCard = (pokemon: PokemonDetailData, idx: number) => {
+    const renderPokemonCard = (pokemon: PokemonDetailData) => {
         return <PokemonCard key={pokemon.id} pokemon={pokemon} />;
     };
 
     useEffect(() => {
-        console.log(isLoading, entry);
-        if(entry) fetchNextPage();
-     
-        // const observer = new IntersectionObserver(handleObserver, {
-        //     root: null,
-        //     threshold: 0.5,
-        //     rootMargin: "0px",
-        // });
-        // if (observerRef.current) observer.observe(observerRef.current);
-        // return () => observer.disconnect();
-    }, [isLoading, entry]);
+        if (intersectionTargetElement && entry) {
+            entry.isIntersecting && fetchNextPage();
+        }
+    }, [intersectionTargetElement, entry]);
 
-    if (isLoading) return <div>로딩중...</div>;
-    if (!pokemonDetailList) return null;
+    if (isLoading)
+        return (
+            <List>
+                {Array.from({ length: DEFAULT_POKEMON_LIST_LIMIT_COUNT }).map((_, idx) => (
+                    <Skeleton key={idx} />
+                ))}
+            </List>
+        );
 
     return (
         <List>
-            {pokemonDetailList.pages.map((item) => item.map(renderPokemonCard))}
-            {!isLoading && <div ref={observerRef} >로딩 옵져버</div>}
+            {pokemonDetailList?.pages.map((item) => item.map(renderPokemonCard))}
+            {isFetchingNextPage &&
+                Array.from({ length: DEFAULT_POKEMON_LIST_LIMIT_COUNT }).map((_, idx) => (
+                    <Skeleton key={idx} />
+                ))}
+            {hasNextPage && <div ref={setIntersectionTargetElement}></div>}
         </List>
     );
 };
 
 export default PokemonList;
-
-const List = styled.div`
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 20px;
-`;

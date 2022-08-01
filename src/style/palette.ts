@@ -21,6 +21,8 @@ export type Palette = {
 
     black: string;
     white: string;
+    orange: string;
+    gray1: string;
 };
 
 const palette: Palette = {
@@ -46,6 +48,8 @@ const palette: Palette = {
 
     black: "#000000",
     white: "#ffffff",
+    orange: "#ffbe47",
+    gray1: "#eeeeee",
 };
 
 export default palette;

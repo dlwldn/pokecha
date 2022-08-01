@@ -16,6 +16,11 @@ type UseQueryOptions = {
     staleTime: number;
 };
 
+export type PokemonDetailPayload = {
+    ids?: number[];
+    isSearch?: boolean;
+}
+
 export type PokemonDetailData = {
     id: number;
     name: string;
@@ -24,6 +29,7 @@ export type PokemonDetailData = {
     types: string[];
     image: string;
 };
+
 
 export const usePokemon = (
     { limit, offset }: PokemonQueryType,
@@ -36,8 +42,10 @@ export const usePokemon = (
     );
 };
 
+
+
 export const usePokemonDetail = (
-    { limit, offset }: PokemonDetailQueryType,
+    ids: number[],
     options?: UseQueryOptions
 ) => {
     return useInfiniteQuery<
@@ -45,8 +53,11 @@ export const usePokemonDetail = (
         AxiosError,
         PokemonDetailData[]
     >(
-        [`${queryKeys.getPokemonDetail}`, limit, offset],
-        ({ pageParam = 0 }) => getPokemonDetail({ limit, offset: (pageParam * limit) + 1 }),
+        [`${queryKeys.getPokemonDetail}`, ids],
+        ({ pageParam = 0 }) => 
+            getPokemonDetail({
+                ids: ids.map((item) => item + (pageParam * 20))
+            }),
         {
             select: ({ pages, pageParams }) => {
                 return {
@@ -75,9 +86,9 @@ export const usePokemonDetail = (
             },
             ...options,
             getNextPageParam: (lastPage, pages) => {
-                return pages.length
-            }
-        },
-        
+                if (pages.length === 40) return;
+                return pages.length;
+            },
+        }
     );
 };

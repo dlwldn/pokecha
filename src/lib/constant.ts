@@ -1,0 +1,1 @@
+export const DEFAULT_POKEMON_LIST_LIMIT_COUNT = 20;
