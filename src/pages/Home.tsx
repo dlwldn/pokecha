@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
+import Filter from "../components/common/Filter";
 import SearchInput from "../components/common/SearchInput";
 import PokemonList from "../components/home/PokemonList";
 import PokemonSearchList from "../components/home/PokemonSearchList";
@@ -10,6 +11,7 @@ type Props = {};
 const Home = (props: Props) => {
     const [keyword, setKeyword] = useState("");
     const [searchItems, setSearchItems] = useState<number[]>([]);
+    const [currentFilter, setCurrentFilter] = useState<string[]>([]);
     const debounceKeyword = useDebounce(keyword);
 
     const onChangeKeyword = (e: ChangeEvent<HTMLInputElement>) => {
@@ -19,6 +21,14 @@ const Home = (props: Props) => {
     const onClearKeyword = () => {
         setKeyword("");
     };
+
+    const onClickFilter = (filterName: string) => {
+        if(currentFilter.includes(filterName)) {
+            setCurrentFilter([...currentFilter.filter(item => item !== filterName)]);
+            return;
+        }
+        setCurrentFilter([...currentFilter, filterName]);
+    }
 
     useEffect(() => {
         if (debounceKeyword === "") return;
@@ -37,8 +47,9 @@ const Home = (props: Props) => {
                 onChange={onChangeKeyword}
                 onClear={onClearKeyword}
             />
-            {!debounceKeyword && <PokemonList />}
-            {debounceKeyword && <PokemonSearchList lists={searchItems} />}
+            <Filter value={currentFilter} onClick={onClickFilter}/>
+            {!debounceKeyword && <PokemonList filterTypes={currentFilter}/>}
+            {debounceKeyword && <PokemonSearchList lists={searchItems} filterTypes={currentFilter} />}
         </div>
     );
 };

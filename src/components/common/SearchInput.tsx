@@ -9,7 +9,7 @@ type Props = {
     onClear?: () => void;
 };
 
-function SearchInput({ value, onClear, ...etc }: Props) {
+const SearchInput = ({ value, onClear, ...etc }: Props) => {
     return (
         <InputWrapper>
             <input type="text" value={value} {...etc} />

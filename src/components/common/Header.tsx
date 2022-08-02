@@ -15,7 +15,8 @@ const Header = (props: Props) => {
 export default Header;
 
 const HeaderWrapper = styled.header`
-    height: 150px;
+    position: relative;
+    height: 120px;
     padding: 10px;
     display: flex;
     justify-content: center;

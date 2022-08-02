@@ -13,7 +13,7 @@ const time = {
     default: '0.2s',
 };
 
-const defaultTransition = `transition: ${time.default} ease-in`;
+const defaultTransition = `transition: ${time.default}`;
 
 const transitions = {
     loadingShimmer,

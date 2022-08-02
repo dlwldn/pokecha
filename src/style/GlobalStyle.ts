@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import reset from 'styled-reset';
+import palette from "./palette";
 
 
 const GlobalStyle = createGlobalStyle`
@@ -9,6 +10,11 @@ const GlobalStyle = createGlobalStyle`
     }
     body {
         font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    a {
+        text-decoration: none;
+        color: ${palette.black};
     }
 `
 

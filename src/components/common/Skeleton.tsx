@@ -13,6 +13,6 @@ export default Skeleton;
 const SkeletonCard = styled.div`
     border: 1px solid #eee;
     border-radius: 5px;
-    height: 220px;
+    height: 240px;
     ${theme.loading.default};
 `;

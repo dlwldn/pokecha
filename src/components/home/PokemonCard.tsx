@@ -73,6 +73,7 @@ const Image = styled.div`
 `;
 const Tag = styled.div`
     width: 100%;
+    margin-top: 10px;
     text-align: right;
     font-weight: 700;
     > span {

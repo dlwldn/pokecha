@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react'
 import styled from 'styled-components'
 import Header from './Header'
+import Nav from './Nav'
 
 type Props = {}
 
@@ -9,6 +10,7 @@ const Layout = ({ children }: PropsWithChildren<Props>) => {
     <Wrapper>
         <Content>
             <Header />
+            <Nav />
             {children}
         </Content>
     </Wrapper>
