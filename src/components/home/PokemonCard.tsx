@@ -1,15 +1,30 @@
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { modalState } from "../../lib/store/client/modal";
 import { PokemonDetailData } from "../../lib/store/server/pokemon";
 import palette, { Palette } from "../../style/palette";
 import theme from "../../style/theme";
 
 type Props = {
     pokemon: PokemonDetailData;
+    index: number;
 };
 
-const PokemonCard = ({ pokemon }: Props) => {
+const PokemonCard = ({ pokemon, index }: Props) => {
+    const setModalClientState = useSetRecoilState(modalState);
+
+    const onClickCard = () => {
+        setModalClientState((currVal) => {
+            return {
+                ...currVal,
+                targetIndex: index,
+                showModal: true,
+            }
+        })
+    }
+
     return (
-        <Card>
+        <Card onClick={onClickCard}>
             <Name type={pokemon.types[0] as keyof Palette}>
                 <div>
                     <span>{String(pokemon.id).padStart(3, "0")}</span>

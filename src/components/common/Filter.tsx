@@ -18,6 +18,7 @@ const Filter = ({ value, onClick }: Prop) => {
     return (
         <div>
             <FilterList>
+                <span>타입 :</span>
                 {POKEMON_FILTER_LIST.map(({ name, color }, idx) => {
                     return (
                         <FilterListItem
@@ -30,7 +31,8 @@ const Filter = ({ value, onClick }: Prop) => {
                     );
                 })}
             </FilterList>
-            <FilterList>
+            {value.length > 0 && <FilterList>
+                <span>선택된 타입 :</span>
                 {POKEMON_FILTER_LIST.filter(item => value.includes(item.name)).map(({ name, color }, idx) => {
                     return (
                         <FilterListItem
@@ -42,23 +44,24 @@ const Filter = ({ value, onClick }: Prop) => {
                         </FilterListItem>
                     );
                 })}
-            </FilterList>
+            </FilterList>}
         </div>
     );
 };
 
 export default Filter;
 
-const FilterList = styled.ul`
+const FilterList = styled.div`
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
-    margin: 20px 0;
+    margin: 10px 0;
 `;
-const FilterListItem = styled.li<{ color: string }>`
+const FilterListItem = styled.div<{ color: string }>`
     color: ${palette.white};
     background-color: ${({ color }) => color};
     padding: 8px 12px;
-    margin: 0 10px 5px 0;
+    margin: 5px;
     border-radius: 10px;
     font-weight: 700;
     transition: ${transitions.defaultTransition};

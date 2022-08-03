@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import palette from "../../style/palette";
+import { ReactComponent as Pokeball } from "../../static/svg/pokeball.svg";
 
 const NAV_LIST = [
     { href: "/", name: "홈" },
@@ -18,6 +19,9 @@ const Nav = (props: Props) => {
                 return (
                     <NavLink to={item.href} key={idx}>
                         {item.name}
+                        <span>
+                            <Pokeball />
+                        </span>
                     </NavLink>
                 );
             })}
@@ -29,8 +33,6 @@ export default Nav;
 
 const Navigation = styled.nav`
     height: 60px;
-    margin: 10px 0;
-    padding: 10px 0;
     display: flex;
     justify-content: space-between;
     > a {
@@ -38,9 +40,19 @@ const Navigation = styled.nav`
         display: flex;
         justify-content: center;
         align-items: center;
+        font-size: 20px;
+        font-weight: 700;
+        > span {
+            width: 20px;
+            margin-left: 5px;
+            margin-top: 3px;
+            display: none;
+        }
     }
     > a.active {
-        color: ${palette.white};
-        background: yellowgreen;
+        color: ${palette.red};
+    }
+    > a.active span {
+        display: inline-block;
     }
 `;

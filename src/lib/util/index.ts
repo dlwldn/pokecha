@@ -5,13 +5,13 @@ export const changeTypeName = (typeName: string) => {
         case 'water':
             return '물'
         case 'bug':
-            return '곤충'
+            return '벌레'
         case 'dragon':
-            return '용'
+            return '드래곤'
         case 'fairy':
             return '페어리'
         case 'ghost':
-            return '유령'
+            return '고스트'
         case 'ground':
             return '땅'
         case 'normal':
@@ -19,7 +19,7 @@ export const changeTypeName = (typeName: string) => {
         case 'steel':
             return '강철'
         case 'dark':
-            return '어둠'
+            return '악'
         case 'electric':
             return '전기'
         case 'fighting':
@@ -35,6 +35,6 @@ export const changeTypeName = (typeName: string) => {
         case 'rock':
             return '바위'
         case 'psychic':
-            return '사이킥'
+            return '에스퍼'
     }
 }

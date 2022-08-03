@@ -25,5 +25,5 @@ const Wrapper = styled.div`
     justify-content: center;
 `
 const Content = styled.div`
-    width: 60%;
+    width: 65%;
 `

@@ -16,7 +16,7 @@ export default Header;
 
 const HeaderWrapper = styled.header`
     position: relative;
-    height: 120px;
+    height: 80px;
     padding: 10px;
     display: flex;
     justify-content: center;

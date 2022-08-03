@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import useIntersection from "../../hooks/useIntersection";
 import { DEFAULT_POKEMON_LIST_LIMIT_COUNT } from "../../lib/constant";
+import { modalState } from "../../lib/store/client/modal";
+import { pokemonState } from "../../lib/store/client/pokemon";
 import {
     PokemonDetailData,
     usePokemonDetail,
@@ -11,35 +14,33 @@ import Skeleton from "../common/Skeleton";
 import PokemonCard from "./PokemonCard";
 
 type Prop = {
+    pokemonIdList: number[];
     filterTypes: string[];
+    isSearch: boolean;
 };
 
-const PokemonList = ({ filterTypes }: Prop) => {
+const PokemonList = ({ pokemonIdList, filterTypes, isSearch }: Prop) => {
     const {
         data: pokemonDetailList,
         isLoading,
         isFetchingNextPage,
         hasNextPage,
         fetchNextPage,
-    } = usePokemonDetail(
-        Array.from({ length: DEFAULT_POKEMON_LIST_LIMIT_COUNT }).map(
-            (_, idx) => idx + 1
-        ),
-        { staleTime: 36000 }
-    );
+    } = usePokemonDetail(pokemonIdList, { staleTime: 36000 });
     const [intersectionTargetElement, setIntersectionTargetElement] =
         useState<HTMLDivElement | null>(null);
     const entry = useIntersection(intersectionTargetElement);
+    const setModalClientState = useSetRecoilState(modalState);
+    const pokemonList = pokemonDetailList?.pages
+        .flat()
+        .filter(
+            (pokemon) =>
+                filterTypes.filter((item) => pokemon.types.includes(item))
+                    .length === filterTypes.length
+        );
 
-    const renderPokemonCard = (pokemon: PokemonDetailData) => {
-        if (filterTypes.length === 0)
-            return <PokemonCard key={pokemon.id} pokemon={pokemon} />;
-        if (
-            filterTypes.filter((item) => pokemon.types.includes(item)).length >
-            0
-        ) {
-            return <PokemonCard key={pokemon.id} pokemon={pokemon} />;
-        }
+    const renderPokemonCard = (pokemon: PokemonDetailData, idx: number) => {
+        return <PokemonCard key={pokemon.id} pokemon={pokemon} index={idx} />;
     };
 
     useEffect(() => {
@@ -47,6 +48,23 @@ const PokemonList = ({ filterTypes }: Prop) => {
             entry.isIntersecting && fetchNextPage();
         }
     }, [intersectionTargetElement, entry]);
+
+    useEffect(() => {
+        if (!pokemonDetailList) return;
+        setModalClientState((currVal) => {
+            return {
+                ...currVal,
+                pokemonList: pokemonDetailList.pages
+                    .flat()
+                    .filter(
+                        (pokemon) =>
+                            filterTypes.filter((item) =>
+                                pokemon.types.includes(item)
+                            ).length === filterTypes.length
+                    ),
+            };
+        });
+    }, [pokemonDetailList, filterTypes]);
 
     if (isLoading)
         return (
@@ -58,25 +76,19 @@ const PokemonList = ({ filterTypes }: Prop) => {
                 )}
             </List>
         );
-
-    if (
-        pokemonDetailList?.pages
-            .map((item) => item.map(renderPokemonCard).filter((item) => item))
-            .flat().length === 0
-    ) {
+    if (pokemonList?.length === 0) {
         return <EmptyData />;
     }
 
     return (
         <List>
-            {pokemonDetailList?.pages.map((item) =>
-                item.map(renderPokemonCard)
-            )}
+            {pokemonList?.map(renderPokemonCard)}
             {isFetchingNextPage &&
+                !isSearch &&
                 Array.from({ length: DEFAULT_POKEMON_LIST_LIMIT_COUNT }).map(
                     (_, idx) => <Skeleton key={idx} />
                 )}
-            {hasNextPage && filterTypes.length === 0 && (
+            {hasNextPage && !isSearch && filterTypes.length === 0 && (
                 <div ref={setIntersectionTargetElement}></div>
             )}
         </List>

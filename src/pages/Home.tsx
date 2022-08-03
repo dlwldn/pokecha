@@ -1,10 +1,12 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
+import styled from "styled-components";
 import Filter from "../components/common/Filter";
 import SearchInput from "../components/common/SearchInput";
 import PokemonList from "../components/home/PokemonList";
-import PokemonSearchList from "../components/home/PokemonSearchList";
 import useDebounce from "../hooks/useDebounce";
+import { DEFAULT_POKEMON_LIST_LIMIT_COUNT } from "../lib/constant";
 import pokemonLangList from "../lib/lang_list.json";
+import palette from "../style/palette";
 
 type Props = {};
 
@@ -23,12 +25,14 @@ const Home = (props: Props) => {
     };
 
     const onClickFilter = (filterName: string) => {
-        if(currentFilter.includes(filterName)) {
-            setCurrentFilter([...currentFilter.filter(item => item !== filterName)]);
+        if (currentFilter.includes(filterName)) {
+            setCurrentFilter([
+                ...currentFilter.filter((item) => item !== filterName),
+            ]);
             return;
         }
         setCurrentFilter([...currentFilter, filterName]);
-    }
+    };
 
     useEffect(() => {
         if (debounceKeyword === "") return;
@@ -41,17 +45,36 @@ const Home = (props: Props) => {
 
     return (
         <div>
-            <SearchInput
-                value={keyword}
-                placeholder="포켓몬 이름 검색"
-                onChange={onChangeKeyword}
-                onClear={onClearKeyword}
+            <SearchWrapper>
+                <SearchInput
+                    value={keyword}
+                    placeholder="포켓몬 이름 검색"
+                    onChange={onChangeKeyword}
+                    onClear={onClearKeyword}
+                />
+            </SearchWrapper>
+            <Filter value={currentFilter} onClick={onClickFilter} />
+            <PokemonList
+                pokemonIdList={
+                    debounceKeyword
+                        ? searchItems
+                        : Array.from({
+                              length: DEFAULT_POKEMON_LIST_LIMIT_COUNT,
+                          }).map((_, idx) => idx + 1)
+                }
+                filterTypes={currentFilter}
+                isSearch={debounceKeyword ? true : false}
             />
-            <Filter value={currentFilter} onClick={onClickFilter}/>
-            {!debounceKeyword && <PokemonList filterTypes={currentFilter}/>}
-            {debounceKeyword && <PokemonSearchList lists={searchItems} filterTypes={currentFilter} />}
         </div>
     );
 };
 
 export default Home;
+
+const SearchWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    background-color: ${palette.gray1};
+    border-radius: 15px;
+`;

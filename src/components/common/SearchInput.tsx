@@ -21,22 +21,31 @@ const SearchInput = ({ value, onClear, ...etc }: Props) => {
 export default SearchInput;
 
 const InputWrapper = styled.div`
-    display: inline-flex;
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 3px solid ${palette.orange};
-    width: 220px;
+    border-right: 3px solid ${palette.red};
+    border-left: 3px solid ${palette.red};
+    border-radius: 5px;
+    width: 100%;
     > input {
         outline: none;
-        padding: 0 5px;
-        height: 35px;
+        padding: 0 10px;
+        height: 50px;
         border: none;
+        width: 100%;
+        background: ${palette.white};
+        color: ${palette.black1};
+        font-size: 20px;
+        font-weight: 700;
     }
     > button {
-        background-color: unset;
+        background-color: ${palette.white};
+        color: ${palette.black1};
+        height: 100%;
         border: none;
         outline: none;
-        font-size: 20px;
+        font-size: 30px;
         cursor: pointer;
     }
 `;
