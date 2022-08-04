@@ -12,29 +12,34 @@ const Modal = (props: Props) => {
     const dimmerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        window.addEventListener('keyup', keyboardCloseEvent)
-        document.body.style.overflow = 'hidden';
+        window.addEventListener("keyup", keyboardCloseEvent);
+        document.body.style.cssText = `
+            position: fixed; 
+            top: -${window.scrollY}px;
+            overflow-y: scroll;
+            width: 100%;
+        `;
         return () => {
-            document.body.style.overflow = "";
-            window.removeEventListener('keyup', keyboardCloseEvent);
+            const scrollY = document.body.style.top;
+            document.body.style.cssText = "";
+            window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+            window.removeEventListener("keyup", keyboardCloseEvent);
         };
     }, []);
 
     const keyboardCloseEvent = (e: KeyboardEvent) => {
-        if(e.key === 'Escape') modalClose();
-    }
+        e.key === "Escape" && modalClose();
+    };
 
     const onClickClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if(e.target === dimmerRef.current) {
-            modalClose();
-        }
-    }
+        e.target === dimmerRef.current && modalClose();
+    };
     const modalClose = () => {
-        setModalClientState((currVal)=> {
+        setModalClientState((currVal) => {
             return {
                 ...currVal,
                 showModal: false,
-            }
+            };
         });
     };
 
@@ -56,12 +61,12 @@ const Dimmer = styled.div`
     width: 100%;
     height: 100vh;
     z-index: 1000;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
 `;
 const Content = styled.div`
-    width: 70%;
-    background-color: ${palette.white};
+    width: 60%;
+    min-width: 850px;
 `;

@@ -1,13 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { POKEMON_TYPE } from "../../lib/constant";
-import { changeTypeName } from "../../lib/util";
-import palette from "../../style/palette";
-import transitions from "../../style/transition";
-
-const POKEMON_FILTER_LIST = Object.keys(POKEMON_TYPE).map((item, idx) => {
-    return { name: item, color: Object.values(POKEMON_TYPE)[idx] };
-});
+import { POKEMON_FILTER_LIST } from "../../lib/constant";
+import FilterTag from "./FilterTag";
 
 type Prop = {
     value: string[];
@@ -21,30 +15,32 @@ const Filter = ({ value, onClick }: Prop) => {
                 <span>타입 :</span>
                 {POKEMON_FILTER_LIST.map(({ name, color }, idx) => {
                     return (
-                        <FilterListItem
+                        <FilterTag
                             key={idx}
                             color={color}
-                            onClick={() => onClick(name)}
-                        >
-                            {changeTypeName(name)}
-                        </FilterListItem>
+                            onClick={onClick}
+                            name={name}
+                        />
                     );
                 })}
             </FilterList>
-            {value.length > 0 && <FilterList>
-                <span>선택된 타입 :</span>
-                {POKEMON_FILTER_LIST.filter(item => value.includes(item.name)).map(({ name, color }, idx) => {
-                    return (
-                        <FilterListItem
-                            key={idx}
-                            color={color}
-                            onClick={() => onClick(name)}
-                        >
-                            {changeTypeName(name)}
-                        </FilterListItem>
-                    );
-                })}
-            </FilterList>}
+            {value.length > 0 && (
+                <FilterList>
+                    <span>선택된 타입 :</span>
+                    {POKEMON_FILTER_LIST.filter((item) =>
+                        value.includes(item.name)
+                    ).map(({ name, color }, idx) => {
+                        return (
+                            <FilterTag
+                                key={idx}
+                                color={color}
+                                onClick={onClick}
+                                name={name}
+                            />
+                        );
+                    })}
+                </FilterList>
+            )}
         </div>
     );
 };
@@ -56,17 +52,4 @@ const FilterList = styled.div`
     align-items: center;
     flex-wrap: wrap;
     margin: 10px 0;
-`;
-const FilterListItem = styled.div<{ color: string }>`
-    color: ${palette.white};
-    background-color: ${({ color }) => color};
-    padding: 8px 12px;
-    margin: 5px;
-    border-radius: 10px;
-    font-weight: 700;
-    transition: ${transitions.defaultTransition};
-    cursor: pointer;
-    :hover {
-        opacity: 0.6;
-    }
 `;

@@ -28,6 +28,7 @@ export type PokemonDetailData = {
     weight: number;
     types: string[];
     image: string;
+    genus: string | null;
 };
 
 
@@ -41,8 +42,6 @@ export const usePokemon = (
         options
     );
 };
-
-
 
 export const usePokemonDetail = (
     ids: number[],
@@ -64,19 +63,21 @@ export const usePokemonDetail = (
                     pages: pages.map((data) => {
                         return data.map(
                             ({ sprites, types, id, height, weight }) => {
+                                const matchedItem = nameList.filter(
+                                    (item) =>
+                                        item.pokemon_species_id === id &&
+                                        item.local_language_id === 3
+                                )[0];
                                 return {
                                     id,
                                     height,
                                     weight,
-                                    name: nameList.filter(
-                                        (item) =>
-                                            item.pokemon_species_id === id &&
-                                            item.local_language_id === 3
-                                    )[0].name,
+                                    name: matchedItem.name,
                                     types: types.map((item) => item.type.name),
                                     image: sprites.other["official-artwork"][
                                         "front_default"
                                     ],
+                                    genus: matchedItem.genus,
                                 };
                             }
                         );

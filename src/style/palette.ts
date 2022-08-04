@@ -9,6 +9,7 @@ export type Palette = PokemonType & {
     gray1: string;
     gray2: string;
     red: string;
+    purple1: string;
 };
 
 const palette: Palette = {
@@ -22,6 +23,7 @@ const palette: Palette = {
     red: "#da343c",
     gray1: "#eeeeee",
     gray2: "#ebebeb",
+    purple1: "#d0b8ff",
 };
 
 export default palette;
