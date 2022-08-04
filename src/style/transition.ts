@@ -9,16 +9,35 @@ const loadingShimmer = keyframes`
     }
 `;
 
+const shake = keyframes`
+    0% {
+        transform: rotate(-10deg)
+    }
+    20% {
+        transform: rotate(5deg)
+    }
+    50% {
+        transform: rotate(-10deg)
+    }
+    70% {
+        transform: rotate(5deg)
+    }
+    100% {
+        transform: rotate(0)
+    }
+`;
+
 const time = {
-    default: '0.2s',
+    default: '0.3s',
 };
 
 const defaultTransition = `transition: ${time.default}`;
 
 const transitions = {
-    loadingShimmer,
     time,
     defaultTransition,
+    loadingShimmer,
+    shake,
 };
 
 export default transitions;

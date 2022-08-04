@@ -10,8 +10,7 @@ const slickSettings: Settings = {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    // lazyLoad: 'ondemand',
-    // fade: true,
+    lazyLoad: 'ondemand',
 };
 
 const PokemonDetailModal = () => {

@@ -42,6 +42,7 @@ const PokemonContainer = (props: Props) => {
                 .map((item) => item.pokemon_species_id)
         );
     }, [debounceKeyword]);
+    
     return (
         <div>
             <SearchWrapper>

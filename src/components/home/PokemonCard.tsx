@@ -4,6 +4,7 @@ import { modalState } from "../../lib/store/client/modal";
 import { PokemonDetailData } from "../../lib/store/server/pokemon";
 import palette, { Palette } from "../../style/palette";
 import theme from "../../style/theme";
+import transitions from "../../style/transition";
 
 type Props = {
     pokemon: PokemonDetailData;
@@ -52,7 +53,7 @@ const Card = styled.div`
     align-items: center;
     border: 1px solid ${palette.gray1};
     border-radius: 5px;
-    transition: 0.3s;
+    ${transitions.defaultTransition};
     cursor: pointer;
 
     :hover {

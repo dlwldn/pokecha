@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import useIntersection from "../../hooks/useIntersection";
 import { DEFAULT_POKEMON_LIST_LIMIT_COUNT } from "../../lib/constant";
 import { modalState } from "../../lib/store/client/modal";
-import { pokemonState } from "../../lib/store/client/pokemon";
 import {
     PokemonDetailData,
     usePokemonDetail,

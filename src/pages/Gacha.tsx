@@ -1,11 +1,10 @@
-import React from 'react'
+import React from "react";
+import GachaContainer from "../components/gacha/GachaContainer";
 
-type Props = {}
+type Props = {};
 
-function Gacha({}: Props) {
-  return (
-    <div>Gacha</div>
-  )
-}
+const Gacha = (props: Props) => {
+    return <GachaContainer />
+};
 
-export default Gacha
+export default Gacha;

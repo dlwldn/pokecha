@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { modalState } from "../../lib/store/client/modal";
-import palette from "../../style/palette";
 import PokemonDetailModal from "./PokemonDetailModal";
 
 type Props = {};
