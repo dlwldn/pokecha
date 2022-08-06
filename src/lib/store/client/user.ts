@@ -1,13 +1,27 @@
-import { atom } from "recoil";
-import { PokemonDetailData } from "../server/pokemon";
-
+import { atom, AtomEffect } from "recoil";
 interface UserState {
-    pokemonList: PokemonDetailData[];
+    pokemonIdList: number[];
 }
 
+const localStrageEffect =
+    (key: string): AtomEffect<UserState> =>
+    ({ setSelf, onSet }) => {
+        const savedValue = localStorage.getItem(key);
+        if (savedValue !== null) {
+            setSelf(JSON.parse(savedValue));
+        }
+
+        onSet((newValue, _, isReset) => {
+            isReset
+                ? localStorage.removeItem(key)
+                : localStorage.setItem(key, JSON.stringify(newValue));
+        });
+    };
+
 export const userState = atom<UserState>({
-    key: 'userState',
+    key: "userState",
     default: {
-        pokemonList: []
-    }
-})
+        pokemonIdList: [],
+    },
+    effects: [localStrageEffect("user_pokemon_list")],
+});

@@ -1,11 +1,8 @@
-import React from 'react'
+import React from "react";
+import MyPageContainer from "../components/my/MyPageContainer";
 
-type Props = {}
+const MyPage = () => {
+    return <MyPageContainer />;
+};
 
-const MyPage = (props: Props) => {
-  return (
-    <div>MyPage</div>
-  )
-}
-
-export default MyPage
+export default MyPage;

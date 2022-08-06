@@ -12,7 +12,7 @@ type Props = {
 };
 
 const PokemonCard = ({ pokemon, index }: Props) => {
-    const setModalClientState = useSetRecoilState(modalState);
+    const [, setModalClientState] = useRecoilState(modalState);
 
     const onClickCard = () => {
         setModalClientState((currVal) => {
@@ -20,9 +20,10 @@ const PokemonCard = ({ pokemon, index }: Props) => {
                 ...currVal,
                 targetIndex: index,
                 showModal: true,
-            }
-        })
-    }
+                isNew: false,
+            };
+        });
+    };
 
     return (
         <Card onClick={onClickCard}>

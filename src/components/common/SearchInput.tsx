@@ -11,15 +11,24 @@ type Props = {
 
 const SearchInput = ({ value, onClear, ...etc }: Props) => {
     return (
-        <InputWrapper>
-            <input type="text" value={value} {...etc} />
-            {onClear && value && <button onClick={onClear}>&times;</button>}
-        </InputWrapper>
+        <SearchWrapper>
+            <InputWrapper>
+                <input type="text" value={value} {...etc} />
+                {onClear && value && <button onClick={onClear}>&times;</button>}
+            </InputWrapper>
+        </SearchWrapper>
     );
-}
+};
 
 export default SearchInput;
 
+const SearchWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    background-color: ${palette.gray1};
+    border-radius: 15px;
+`;
 const InputWrapper = styled.div`
     display: flex;
     justify-content: space-between;

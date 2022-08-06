@@ -1,6 +1,7 @@
+import { useState } from "react";
 import Slider, { Settings } from "react-slick";
 import { useRecoilValue } from "recoil";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { POKEMON_FILTER_LIST } from "../../lib/constant";
 import { modalState } from "../../lib/store/client/modal";
 import palette from "../../style/palette";
@@ -10,11 +11,11 @@ const slickSettings: Settings = {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    lazyLoad: 'ondemand',
+    lazyLoad: "ondemand",
 };
 
 const PokemonDetailModal = () => {
-    const { pokemonList, targetIndex } = useRecoilValue(modalState);
+    const { pokemonList, targetIndex, isNew } = useRecoilValue(modalState);
 
     return (
         <SliderWrapper>
@@ -29,9 +30,9 @@ const PokemonDetailModal = () => {
                                 />
                             </ImageWrapper>
                             <InfoWrapper>
-                                <span>
+                                <PokemonNumber isNew={isNew}>
                                     No.{String(pokemon.id).padStart(3, "0")}
-                                </span>
+                                </PokemonNumber>
                                 <h3>{pokemon.name}</h3>
                                 <div>
                                     <span>타입 :</span>
@@ -43,7 +44,7 @@ const PokemonDetailModal = () => {
                                                 key={idx}
                                                 color={color}
                                                 name={name}
-                                                cursor='default'
+                                                cursor="default"
                                             />
                                         );
                                     })}
@@ -114,19 +115,14 @@ const InfoWrapper = styled.div`
     flex-direction: column;
     justify-content: space-between;
     padding: 25px;
-    > span,
-    > h3,
+    h3,
     > div {
         margin-bottom: 20px;
     }
-    > span,
-    > h3 {
+    h3 {
         font-size: 45px;
     }
-    > span {
-        color: ${palette.purple1};
-    }
-    > h3 {
+    h3 {
         margin-bottom: 60px;
     }
     > div {
@@ -136,4 +132,22 @@ const InfoWrapper = styled.div`
             margin-right: 5px;
         }
     }
+`;
+const PokemonNumber = styled.span<{ isNew: boolean }>`
+    position: relative;
+    color: ${palette.purple1};
+    margin-bottom: 20px;
+    font-size: 45px;
+    ${({ isNew }) =>
+        isNew &&
+        css`
+            :before {
+                content: "New!!";
+                position: absolute;
+                top: -30px;
+                left: -30px;
+                font-size: 30px;
+                color: ${palette.red};
+            }
+        `}
 `;

@@ -5,6 +5,7 @@ interface ModalState {
     targetIndex: number;
     pokemonList: PokemonDetailData[];
     showModal: boolean;
+    isNew: boolean;
 }
 
 export const modalState = atom<ModalState>({
@@ -13,5 +14,6 @@ export const modalState = atom<ModalState>({
         targetIndex: 0,
         pokemonList: [],
         showModal: false,
+        isNew: false,
     },
 });

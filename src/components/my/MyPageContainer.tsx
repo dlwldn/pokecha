@@ -1,16 +1,20 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import useDebounce from "../../hooks/useDebounce";
-import { DEFAULT_POKEMON_LIST_LIMIT_COUNT } from "../../lib/constant";
-import pokemonLangList from "../../lib/lang_list.json";
+import { userState } from "../../lib/store/client/user";
 import Filter from "../common/Filter";
 import SearchInput from "../common/SearchInput";
-import PokemonList from "./PokemonList";
+import PokemonList from "../home/PokemonList";
+import pokemonLangList from "../../lib/lang_list.json";
 
 type Props = {};
 
-const HomeContainer = (props: Props) => {
+const MyPageContainer = (props: Props) => {
+    const [userClientState, setUserClientState] = useRecoilState(userState);
     const [keyword, setKeyword] = useState("");
-    const [searchItems, setSearchItems] = useState<number[]>([]);
+    const [searchItems, setSearchItems] = useState<number[]>(
+        userClientState.pokemonIdList
+    );
     const [currentFilter, setCurrentFilter] = useState<string[]>([]);
     const debounceKeyword = useDebounce(keyword);
 
@@ -33,15 +37,17 @@ const HomeContainer = (props: Props) => {
     };
 
     useEffect(() => {
-        if (debounceKeyword === "") return;
         setSearchItems(
-            pokemonLangList
-                .filter(
-                    (item) =>
-                        item.name.includes(debounceKeyword) &&
-                        item.local_language_id === 3
-                )
-                .map((item) => item.pokemon_species_id)
+            userClientState.pokemonIdList.filter((item) =>
+                pokemonLangList
+                    .filter(
+                        (item) =>
+                            item.name.includes(debounceKeyword) &&
+                            item.local_language_id === 3
+                    )
+                    .map((item) => item.pokemon_species_id)
+                    .includes(item)
+            )
         );
     }, [debounceKeyword]);
 
@@ -55,18 +61,12 @@ const HomeContainer = (props: Props) => {
             />
             <Filter value={currentFilter} onClick={onClickFilter} />
             <PokemonList
-                pokemonIdList={
-                    debounceKeyword
-                        ? searchItems
-                        : Array.from({
-                              length: DEFAULT_POKEMON_LIST_LIMIT_COUNT,
-                          }).map((_, idx) => idx + 1)
-                }
+                pokemonIdList={searchItems}
                 filterTypes={currentFilter}
-                isNotUsedInfinite={debounceKeyword ? true : false}
+                isNotUsedInfinite={true}
             />
         </div>
     );
 };
 
-export default HomeContainer;
+export default MyPageContainer;

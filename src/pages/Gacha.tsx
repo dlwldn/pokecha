@@ -1,9 +1,7 @@
 import React from "react";
 import GachaContainer from "../components/gacha/GachaContainer";
 
-type Props = {};
-
-const Gacha = (props: Props) => {
+const Gacha = () => {
     return <GachaContainer />
 };
 

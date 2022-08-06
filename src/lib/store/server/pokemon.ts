@@ -5,7 +5,6 @@ import {
     getPokemon,
     PokemonDataType,
     PokemonQueryType,
-    PokemonDetailQueryType,
     PokemonDetailApiDataType,
     getPokemonDetail,
 } from "../../api/pokemon";

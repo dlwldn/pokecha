@@ -14,11 +14,11 @@ import PokemonCard from "./PokemonCard";
 
 type Prop = {
     pokemonIdList: number[];
-    filterTypes: string[];
-    isSearch: boolean;
+    filterTypes?: string[];
+    isNotUsedInfinite?: boolean;
 };
 
-const PokemonList = ({ pokemonIdList, filterTypes, isSearch }: Prop) => {
+const PokemonList = ({ pokemonIdList, filterTypes = [], isNotUsedInfinite = false }: Prop) => {
     const {
         data: pokemonDetailList,
         isLoading,
@@ -61,6 +61,7 @@ const PokemonList = ({ pokemonIdList, filterTypes, isSearch }: Prop) => {
                                 pokemon.types.includes(item)
                             ).length === filterTypes.length
                     ),
+                isNew: false,
             };
         });
     }, [pokemonDetailList, filterTypes]);
@@ -83,11 +84,11 @@ const PokemonList = ({ pokemonIdList, filterTypes, isSearch }: Prop) => {
         <List>
             {pokemonList?.map(renderPokemonCard)}
             {isFetchingNextPage &&
-                !isSearch &&
+                !isNotUsedInfinite &&
                 Array.from({ length: DEFAULT_POKEMON_LIST_LIMIT_COUNT }).map(
                     (_, idx) => <Skeleton key={idx} />
                 )}
-            {hasNextPage && !isSearch && filterTypes.length === 0 && (
+            {hasNextPage && !isNotUsedInfinite && filterTypes.length === 0 && (
                 <div ref={setIntersectionTargetElement}></div>
             )}
         </List>
