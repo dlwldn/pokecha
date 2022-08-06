@@ -1,6 +1,6 @@
 import { PokemonBreadType } from "../constant"
 
-export const changeTypeName = (typeName: string) => {
+export const changeTypeName = (typeName: string): string => {
     switch(typeName) {
         case 'fire':
             return '불'
@@ -38,10 +38,12 @@ export const changeTypeName = (typeName: string) => {
             return '바위'
         case 'psychic':
             return '에스퍼'
+        default:
+            return '타입미정'
     }
 }
 
-export const getRandomBread = (breads: PokemonBreadType[]) => {
+export const getRandomBread = (breads: PokemonBreadType[]): PokemonBreadType => {
     const randomIndex = Math.floor(Math.random() * breads.length);
     return breads[randomIndex];
 }

@@ -35,23 +35,23 @@ const GachaContainer = (props: Props) => {
             const image = new Image();
             image.src = pokemonDetailList.pages[0][0].image;
             image.onload = () => {
-                setTimeout(()=> {
-                    setShowBread(true);
-                    setModalClientState({
-                        showModal: true,
-                        targetIndex: 0,
-                        pokemonList: pokemonDetailList.pages[0],
-                        isNew: isDuplication ? false : true,
+                setShowBread(true);
+                setModalClientState({
+                    showModal: true,
+                    targetIndex: 0,
+                    pokemonList: pokemonDetailList.pages[0],
+                    isNew: isDuplication ? false : true,
+                });
+                if (!isDuplication) {
+                    setUserClientState({
+                        pokemonIdList: [
+                            ...userClientState.pokemonIdList,
+                            ...pokemonDetailList.pages[0].map(
+                                (item) => item.id
+                            ),
+                        ],
                     });
-                    if (!isDuplication) {
-                        setUserClientState({
-                            pokemonIdList: [
-                                ...userClientState.pokemonIdList,
-                                ...pokemonDetailList.pages[0].map(item => item.id),
-                            ],
-                        });
-                    }
-                }, 800)
+                }
             };
         }
     }, [pokemonDetailList, isDuplication]);
@@ -69,7 +69,7 @@ const GachaContainer = (props: Props) => {
 
     return (
         <GachaWrapper>
-            {<Bread onClick={onClickBread} isGacha={showBread} />}
+            {<Bread onClick={onClickBread} showBread={showBread} />}
         </GachaWrapper>
     );
 };

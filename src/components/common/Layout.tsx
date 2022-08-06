@@ -24,6 +24,6 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: center;
 `
-const Content = styled.div`
+const Content = styled.main`
     width: 65%;
 `

@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { POKEMON_BREADS } from "../../lib/constant";
+import { PokemonBreadType, POKEMON_BREADS } from "../../lib/constant";
 import { getRandomBread } from "../../lib/util";
 import transitions from "../../style/transition";
 
 type Props = {
-    isGacha: boolean;
+    showBread: boolean;
     onClick: () => void;
 };
 
-const Bread = ({ isGacha, onClick }: Props) => {
-    const [currentBread, setCurrentBread] = useState(
-        getRandomBread(POKEMON_BREADS)
-    );
+const Bread = ({ showBread, onClick }: Props) => {
+    const [currentBread, setCurrentBread] = useState<PokemonBreadType>({
+        name: "",
+        image: "",
+    });
 
     useEffect(() => {
-        if (isGacha) {
+        if (showBread) {
             setCurrentBread(getRandomBread(POKEMON_BREADS));
         }
-    }, [isGacha]);
+    }, [showBread]);
 
     return (
         <Image
-            isGacha={isGacha}
-            onClick={isGacha ? onClick : () => {}}
+            showBread={showBread}
+            onClick={showBread ? onClick : () => {}}
             src={currentBread.image}
             alt={currentBread.name}
         />
@@ -32,13 +33,13 @@ const Bread = ({ isGacha, onClick }: Props) => {
 
 export default Bread;
 
-const Image = styled.img<{ isGacha: boolean }>`
+const Image = styled.img<{ showBread: boolean }>`
     position: relative;
     ${transitions.defaultTransition};
     top: 0;
-    opacity: ${({ isGacha }) => (isGacha ? 1 : 0)};
-    
-    cursor: ${({ isGacha }) => (isGacha ? 'pointer' : 'default')};
+    opacity: ${({ showBread }) => (showBread ? 1 : 0)};
+
+    cursor: ${({ showBread }) => (showBread ? "pointer" : "default")};
     :hover {
         top: -30px;
         animation-name: ${transitions.shake};

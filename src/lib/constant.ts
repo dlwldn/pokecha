@@ -27,6 +27,10 @@ export type PokemonType = {
     water: string;
     psychic: string;
 };
+export type PokemonFilterType = {
+    name: string;
+    color: string;
+}
 export type PokemonBreadType = {
     name: string;
     image: string;
@@ -53,7 +57,7 @@ export const POKEMON_TYPE: PokemonType = {
     dark: "#707070",
     fairy: "#fdb9e9",
 };
-export const POKEMON_FILTER_LIST = Object.keys(POKEMON_TYPE).map(
+export const POKEMON_FILTER_LIST: PokemonFilterType[] = Object.keys(POKEMON_TYPE).map(
     (item, idx) => {
         return { name: item, color: Object.values(POKEMON_TYPE)[idx] };
     }
