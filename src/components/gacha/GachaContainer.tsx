@@ -78,7 +78,7 @@ export default GachaContainer;
 
 const GachaWrapper = styled.div`
     width: 100%;
-    height: calc(100vh - 140px);
+    height: calc(100vh - 160px);
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
+import styled from "styled-components";
 import useDebounce from "../../hooks/useDebounce";
 import { DEFAULT_POKEMON_LIST_LIMIT_COUNT } from "../../lib/constant";
 import pokemonLangList from "../../lib/lang_list.json";

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { POKEMON_FILTER_LIST } from "../../lib/constant";
+import palette from "../../style/palette";
 import FilterTag from "./FilterTag";
 
 type Prop = {
@@ -10,7 +11,7 @@ type Prop = {
 
 const Filter = ({ value, onClick }: Prop) => {
     return (
-        <div>
+        <FilterWrapper>
             <FilterList>
                 <span>타입 :</span>
                 {POKEMON_FILTER_LIST.map(({ name, color }, idx) => {
@@ -41,15 +42,20 @@ const Filter = ({ value, onClick }: Prop) => {
                     })}
                 </FilterList>
             )}
-        </div>
+        </FilterWrapper>
     );
 };
 
 export default Filter;
 
+const FilterWrapper = styled.div`
+    background-color: ${palette.white};
+    padding: 10px 20px;
+    border-bottom: 1px solid ${palette.gray1};
+`
 const FilterList = styled.div`
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    margin: 10px 0;
+    background-color: ${palette.white};
 `;

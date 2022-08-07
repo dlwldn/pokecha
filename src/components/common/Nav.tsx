@@ -3,12 +3,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import palette from "../../style/palette";
 import { ReactComponent as Pokeball } from "../../static/svg/pokeball.svg";
-
-const NAV_LIST = [
-    { href: "/", name: "홈" },
-    { href: "/gacha", name: "뽑기" },
-    { href: "/my", name: "내 포켓몬" },
-];
+import { NAV_LIST } from "../../lib/constant";
 
 type Props = {};
 
@@ -32,7 +27,14 @@ const Nav = (props: Props) => {
 export default Nav;
 
 const Navigation = styled.nav`
-    height: 60px;
+    position: sticky;
+    top: 60px;
+    margin-bottom: 10px;
+    border-top: 1px solid ${palette.gray1};
+    border-bottom: 1px solid ${palette.gray1};
+    background-color: ${palette.white};
+    z-index: 5;
+    height: 40px;
     display: flex;
     justify-content: space-between;
     > a {

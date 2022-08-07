@@ -15,12 +15,13 @@ const ListWrapper = styled.div`
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 20px;
     margin: 20px 0;
+    padding: 0 25px;
 
-    ${media.xlarge} {
+    ${media.medium} {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    ${media.small} {
+    ${media.xsmall} {
         grid-template-columns: repeat(1, 1fr);
     }
 `;

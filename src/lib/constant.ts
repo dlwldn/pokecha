@@ -35,7 +35,16 @@ export type PokemonBreadType = {
     name: string;
     image: string;
 }
+export type NavListType = {
+    href: string;
+    name: string;
+}
 
+export const NAV_LIST: NavListType[] = [
+    { href: "/", name: "홈" },
+    { href: "/gacha", name: "뽑기" },
+    { href: "/my", name: "내 포켓몬" },
+];
 export const DEFAULT_POKEMON_LIST_LIMIT_COUNT: number = 20;
 export const POKEMON_TYPE: PokemonType = {
     normal: "#a4acaf",
