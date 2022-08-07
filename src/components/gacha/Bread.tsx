@@ -14,17 +14,26 @@ const Bread = ({ showBread, onClick }: Props) => {
         name: "",
         image: "",
     });
+    const [isReadyBread, setIsReadyBread] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (showBread) {
-            setCurrentBread(getRandomBread(POKEMON_BREADS));
+    useEffect(()=> {
+        if(!showBread) {
+            setIsReadyBread(false)
+        } else {
+            const bread = getRandomBread(POKEMON_BREADS);
+            const image = new Image();
+            image.src = bread.image;
+            image.onload = () => {
+                setIsReadyBread(true);
+                setCurrentBread(bread);
+            }
         }
-    }, [showBread]);
+    }, [showBread])
 
     return (
-        <Image
-            showBread={showBread}
-            onClick={showBread ? onClick : () => {}}
+        <BreadImage
+            isReadyBread={isReadyBread}
+            onClick={isReadyBread ? onClick : () => {}}
             src={currentBread.image}
             alt={currentBread.name}
         />
@@ -33,19 +42,19 @@ const Bread = ({ showBread, onClick }: Props) => {
 
 export default Bread;
 
-const Image = styled.img<{ showBread: boolean }>`
+const BreadImage = styled.img<{ isReadyBread: boolean }>`
     position: relative;
-    ${transitions.defaultTransition};
+    transition: 1s;
     top: 0;
-    opacity: ${({ showBread }) => (showBread ? 1 : 0)};
+    visibility: ${({ isReadyBread }) => (isReadyBread ? "visible" : "hidden")};
+    opacity: ${({ isReadyBread }) => (isReadyBread ? 1 : 0)};
 
-    cursor: ${({ showBread }) => (showBread ? "pointer" : "default")};
+    cursor: pointer;
     :hover {
         top: -30px;
         animation-name: ${transitions.shake};
         animation-duration: 1s;
-        animation-timing-function: linear;
-        animation-delay: 1ms;
+        animation-direction: alternate;
         animation-iteration-count: infinite;
     }
 `;

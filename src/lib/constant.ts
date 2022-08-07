@@ -45,7 +45,9 @@ export const NAV_LIST: NavListType[] = [
     { href: "/gacha", name: "뽑기" },
     { href: "/my", name: "내 포켓몬" },
 ];
+export const DEFAULT_POKEMON_MAX_ID: number = 880;
 export const DEFAULT_POKEMON_LIST_LIMIT_COUNT: number = 20;
+export const DEFAULT_POKEMON_KOREAN_LANGUAGE_ID: number = 3;
 export const POKEMON_TYPE: PokemonType = {
     normal: "#a4acaf",
     fighting: "#d56723",

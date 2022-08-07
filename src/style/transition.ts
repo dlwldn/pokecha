@@ -13,17 +13,14 @@ const shake = keyframes`
     0% {
         transform: rotate(-10deg)
     }
-    20% {
+    35% {
         transform: rotate(5deg)
     }
-    50% {
+    65% {
         transform: rotate(-10deg)
     }
-    70% {
-        transform: rotate(5deg)
-    }
     100% {
-        transform: rotate(0)
+        transform: rotate(5deg)
     }
 `;
 

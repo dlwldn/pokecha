@@ -1,5 +1,4 @@
 import pokeApi from ".";
-import { DEFAULT_POKEMON_LIST_LIMIT_COUNT } from "../constant";
 
 export type PokemonQueryType = {
     limit: number;

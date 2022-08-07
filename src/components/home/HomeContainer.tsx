@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import useDebounce from "../../hooks/useDebounce";
-import { DEFAULT_POKEMON_LIST_LIMIT_COUNT } from "../../lib/constant";
+import { DEFAULT_POKEMON_KOREAN_LANGUAGE_ID, DEFAULT_POKEMON_LIST_LIMIT_COUNT } from "../../lib/constant";
 import pokemonLangList from "../../lib/lang_list.json";
 import Filter from "../common/Filter";
 import SearchInput from "../common/SearchInput";
@@ -40,7 +40,7 @@ const HomeContainer = (props: Props) => {
                 .filter(
                     (item) =>
                         item.name.includes(debounceKeyword) &&
-                        item.local_language_id === 3
+                        item.local_language_id === DEFAULT_POKEMON_KOREAN_LANGUAGE_ID
                 )
                 .map((item) => item.pokemon_species_id)
         );

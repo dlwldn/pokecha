@@ -4,7 +4,10 @@ import styled from "styled-components";
 import { modalState } from "../../lib/store/client/modal";
 import { userState } from "../../lib/store/client/user";
 import { usePokemonDetail } from "../../lib/store/server/pokemon";
+import transitions from "../../style/transition";
 import Bread from "./Bread";
+import backgroundImage from '../../static/images/back.png';
+import { DEFAULT_POKEMON_MAX_ID } from "../../lib/constant";
 
 type Props = {};
 
@@ -17,7 +20,7 @@ const GachaContainer = (props: Props) => {
         isFetching,
         refetch,
     } = usePokemonDetail([gachaPokemonId], {
-        staleTime: 0,
+        staleTime: 300000,
         enabled: gachaPokemonId !== 0,
     });
     const setModalClientState = useSetRecoilState(modalState);
@@ -35,29 +38,31 @@ const GachaContainer = (props: Props) => {
             const image = new Image();
             image.src = pokemonDetailList.pages[0][0].image;
             image.onload = () => {
-                setShowBread(true);
-                setModalClientState({
-                    showModal: true,
-                    targetIndex: 0,
-                    pokemonList: pokemonDetailList.pages[0],
-                    isNew: isDuplication ? false : true,
-                });
-                if (!isDuplication) {
-                    setUserClientState({
-                        pokemonIdList: [
-                            ...userClientState.pokemonIdList,
-                            ...pokemonDetailList.pages[0].map(
-                                (item) => item.id
-                            ),
-                        ],
+                setTimeout(() => {
+                    setShowBread(true);
+                    setModalClientState({
+                        showModal: true,
+                        targetIndex: 0,
+                        pokemonList: pokemonDetailList.pages[0],
+                        isNew: isDuplication ? false : true,
                     });
-                }
+                    if (!isDuplication) {
+                        setUserClientState({
+                            pokemonIdList: [
+                                ...userClientState.pokemonIdList,
+                                ...pokemonDetailList.pages[0].map(
+                                    (item) => item.id
+                                ),
+                            ],
+                        });
+                    }
+                }, 1000)    
             };
         }
     }, [pokemonDetailList, isDuplication]);
 
     const onClickBread = () => {
-        const randomId = Math.floor(Math.random() * 850) + 1;
+        const randomId = Math.floor(Math.random() * DEFAULT_POKEMON_MAX_ID) + 1;
         setGachaPokemonId(randomId);
         if (userClientState.pokemonIdList.some((id) => id === randomId)) {
             refetch();
@@ -83,5 +88,9 @@ const GachaWrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: 0.3s opacity;
+    transition: ${transitions.time.default} opacity;
+    background-image: url(${backgroundImage});
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 `;

@@ -25,7 +25,7 @@ const PokemonList = ({ pokemonIdList, filterTypes = [], isNotUsedInfinite = fals
         isFetchingNextPage,
         hasNextPage,
         fetchNextPage,
-    } = usePokemonDetail(pokemonIdList, { staleTime: 36000 });
+    } = usePokemonDetail(pokemonIdList, { staleTime: 300000 });
     const [intersectionTargetElement, setIntersectionTargetElement] =
         useState<HTMLDivElement | null>(null);
     const entry = useIntersection(intersectionTargetElement);

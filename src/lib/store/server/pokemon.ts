@@ -8,6 +8,11 @@ import {
     PokemonDetailApiDataType,
     getPokemonDetail,
 } from "../../api/pokemon";
+import {
+    DEFAULT_POKEMON_KOREAN_LANGUAGE_ID,
+    DEFAULT_POKEMON_LIST_LIMIT_COUNT,
+    DEFAULT_POKEMON_MAX_ID,
+} from "../../constant";
 import nameList from "../../lang_list.json";
 
 type UseQueryOptions = {
@@ -18,7 +23,7 @@ type UseQueryOptions = {
 export type PokemonDetailPayload = {
     ids?: number[];
     isSearch?: boolean;
-}
+};
 
 export type PokemonDetailData = {
     id: number;
@@ -29,7 +34,6 @@ export type PokemonDetailData = {
     image: string;
     genus: string | null;
 };
-
 
 export const usePokemon = (
     { limit, offset }: PokemonQueryType,
@@ -42,19 +46,16 @@ export const usePokemon = (
     );
 };
 
-export const usePokemonDetail = (
-    ids: number[],
-    options?: UseQueryOptions
-) => {
+export const usePokemonDetail = (ids: number[], options?: UseQueryOptions) => {
     return useInfiniteQuery<
         PokemonDetailApiDataType[],
         AxiosError,
         PokemonDetailData[]
     >(
         [`${queryKeys.getPokemonDetail}`, ids],
-        ({ pageParam = 0 }) => 
+        ({ pageParam = 0 }) =>
             getPokemonDetail({
-                ids: ids.map((item) => item + (pageParam * 20))
+                ids: ids.map((item) => item + pageParam * DEFAULT_POKEMON_LIST_LIMIT_COUNT),
             }),
         {
             select: ({ pages, pageParams }) => {
@@ -65,7 +66,7 @@ export const usePokemonDetail = (
                                 const matchedItem = nameList.filter(
                                     (item) =>
                                         item.pokemon_species_id === id &&
-                                        item.local_language_id === 3
+                                        item.local_language_id === DEFAULT_POKEMON_KOREAN_LANGUAGE_ID
                                 )[0];
                                 return {
                                     id,
@@ -86,7 +87,11 @@ export const usePokemonDetail = (
             },
             ...options,
             getNextPageParam: (lastPage, pages) => {
-                if (pages.length === 40) return;
+                if (
+                    pages.length ===
+                    DEFAULT_POKEMON_MAX_ID / DEFAULT_POKEMON_LIST_LIMIT_COUNT
+                )
+                    return;
                 return pages.length;
             },
         }

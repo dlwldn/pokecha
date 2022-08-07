@@ -6,7 +6,7 @@ import transitions from "../../style/transition";
 type Props = {};
 
 const ScrollTop = (props: Props) => {
-    const [showScroll, setShowScroll] = useState<boolean>(true);
+    const [showScroll, setShowScroll] = useState<boolean>(false);
 
     useEffect(()=> {
         document.addEventListener('scroll', scrollEvent);

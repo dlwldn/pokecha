@@ -6,11 +6,12 @@ import Filter from "../common/Filter";
 import SearchInput from "../common/SearchInput";
 import PokemonList from "../home/PokemonList";
 import pokemonLangList from "../../lib/lang_list.json";
+import { DEFAULT_POKEMON_KOREAN_LANGUAGE_ID } from "../../lib/constant";
 
 type Props = {};
 
 const MyPageContainer = (props: Props) => {
-    const [userClientState, setUserClientState] = useRecoilState(userState);
+    const [userClientState, _] = useRecoilState(userState);
     const [keyword, setKeyword] = useState("");
     const [searchItems, setSearchItems] = useState<number[]>(
         userClientState.pokemonIdList
@@ -43,11 +44,11 @@ const MyPageContainer = (props: Props) => {
                     .filter(
                         (item) =>
                             item.name.includes(debounceKeyword) &&
-                            item.local_language_id === 3
+                            item.local_language_id === DEFAULT_POKEMON_KOREAN_LANGUAGE_ID
                     )
                     .map((item) => item.pokemon_species_id)
                     .includes(item)
-            )
+            ).sort((a, b) => Number(a) - Number(b))
         );
     }, [debounceKeyword]);
 
