@@ -43,9 +43,7 @@ const Button = styled.button<{ showScroll: boolean }>`
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    border: none;
     font-size: 30px;
     color: ${palette.white};
     background-color: ${palette.ice};
-    cursor: pointer;
 `

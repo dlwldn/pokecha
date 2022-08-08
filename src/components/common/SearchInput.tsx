@@ -52,9 +52,6 @@ const InputWrapper = styled.div`
         background-color: ${palette.white};
         color: ${palette.black1};
         height: 100%;
-        border: none;
-        outline: none;
         font-size: 30px;
-        cursor: pointer;
     }
 `;

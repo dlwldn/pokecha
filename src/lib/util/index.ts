@@ -39,7 +39,7 @@ export const changeTypeName = (typeName: string): string => {
         case 'psychic':
             return '에스퍼'
         default:
-            return '타입미정'
+            return '???'
     }
 }
 

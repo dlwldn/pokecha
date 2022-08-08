@@ -64,7 +64,7 @@ const HomeContainer = (props: Props) => {
                           }).map((_, idx) => idx + 1)
                 }
                 filterTypes={currentFilter}
-                isNotUsedInfinite={debounceKeyword ? true : false}
+                PokemonShowMode={debounceKeyword ? 'find' : 'default'}
             />
         </div>
     );

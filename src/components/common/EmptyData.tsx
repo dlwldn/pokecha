@@ -27,7 +27,7 @@ const Empty = styled.div`
     min-height: 500px;
 
     > img {
-        width: 100%;
+        width: 90%;
         max-width: 400px;
     }
 

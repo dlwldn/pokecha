@@ -15,6 +15,11 @@ const GlobalStyle = createGlobalStyle`
         text-decoration: none;
         color: ${palette.black};
     }
+    button {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
 `
 
 export default GlobalStyle;

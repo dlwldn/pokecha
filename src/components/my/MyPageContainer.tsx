@@ -4,19 +4,21 @@ import useDebounce from "../../hooks/useDebounce";
 import { userState } from "../../lib/store/client/user";
 import Filter from "../common/Filter";
 import SearchInput from "../common/SearchInput";
-import PokemonList from "../home/PokemonList";
+import PokemonList, { PokemonShowMode } from "../home/PokemonList";
 import pokemonLangList from "../../lib/lang_list.json";
 import { DEFAULT_POKEMON_KOREAN_LANGUAGE_ID } from "../../lib/constant";
+import ListModeButtons from "./ListModeButtons";
 
 type Props = {};
 
 const MyPageContainer = (props: Props) => {
     const [userClientState, _] = useRecoilState(userState);
-    const [keyword, setKeyword] = useState("");
+    const [keyword, setKeyword] = useState<string>("");
     const [searchItems, setSearchItems] = useState<number[]>(
         userClientState.pokemonIdList
     );
     const [currentFilter, setCurrentFilter] = useState<string[]>([]);
+    const [showMode, setShowMode] = useState<PokemonShowMode>("collectionAll");
     const debounceKeyword = useDebounce(keyword);
 
     const onChangeKeyword = (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,18 +39,25 @@ const MyPageContainer = (props: Props) => {
         setCurrentFilter([...currentFilter, filterName]);
     };
 
+    const onClickChangeMode = (e: React.MouseEvent<HTMLButtonElement>) => {
+        setShowMode(e.currentTarget.name as PokemonShowMode);
+    };
+
     useEffect(() => {
         setSearchItems(
-            userClientState.pokemonIdList.filter((item) =>
-                pokemonLangList
-                    .filter(
-                        (item) =>
-                            item.name.includes(debounceKeyword) &&
-                            item.local_language_id === DEFAULT_POKEMON_KOREAN_LANGUAGE_ID
-                    )
-                    .map((item) => item.pokemon_species_id)
-                    .includes(item)
-            ).sort((a, b) => Number(a) - Number(b))
+            userClientState.pokemonIdList
+                .filter((item) =>
+                    pokemonLangList
+                        .filter(
+                            (item) =>
+                                item.name.includes(debounceKeyword) &&
+                                item.local_language_id ===
+                                    DEFAULT_POKEMON_KOREAN_LANGUAGE_ID
+                        )
+                        .map((item) => item.pokemon_species_id)
+                        .includes(item)
+                )
+                .sort((a, b) => Number(a) - Number(b))
         );
     }, [debounceKeyword]);
 
@@ -61,10 +70,11 @@ const MyPageContainer = (props: Props) => {
                 onClear={onClearKeyword}
             />
             <Filter value={currentFilter} onClick={onClickFilter} />
+            <ListModeButtons value={showMode} onClick={onClickChangeMode} />
             <PokemonList
                 pokemonIdList={searchItems}
                 filterTypes={currentFilter}
-                isNotUsedInfinite={true}
+                PokemonShowMode={debounceKeyword ? "find" : showMode}
             />
         </div>
     );

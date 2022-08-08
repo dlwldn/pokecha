@@ -1,5 +1,5 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
-import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import styled, { css } from "styled-components";
 import { modalState } from "../../lib/store/client/modal";
 import { PokemonDetailData } from "../../lib/store/server/pokemon";
 import palette, { Palette } from "../../style/palette";
@@ -26,14 +26,14 @@ const PokemonCard = ({ pokemon, index }: Props) => {
     };
 
     return (
-        <Card onClick={onClickCard}>
+        <Card onClick={pokemon.types[0] !== 'null' ? onClickCard: ()=>{}}>
             <Name type={pokemon.types[0] as keyof Palette}>
                 <div>
                     <span>{String(pokemon.id).padStart(3, "0")}</span>
                     <span>{pokemon.name}</span>
                 </div>
             </Name>
-            <Image>
+            <Image isTypeNull={pokemon.types[0] === 'null'}>
                 <img src={pokemon.image} alt={`${pokemon.name} 스티커`} />
             </Image>
             <Tag>
@@ -79,13 +79,16 @@ const Name = styled.div<{ type: keyof Palette }>`
         }
     }
 `;
-const Image = styled.div`
+const Image = styled.div<{ isTypeNull: boolean }>`
     width: 160px;
     height: 160px;
     padding: 10px;
     img {
         width: 100%;
         height: 100%;
+        ${({ isTypeNull }) => isTypeNull && css`
+            filter: contrast(0);
+        `}
     }
 `;
 const Tag = styled.div`

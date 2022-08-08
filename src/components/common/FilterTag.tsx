@@ -30,7 +30,7 @@ const Tag = styled.div<{ color: string; cursor: CursorType }>`
     color: ${palette.white};
     background-color: ${({ color }) => color};
     padding: 8px 12px;
-    margin: 5px;
+    margin: 3px;
     border-radius: 10px;
     font-weight: 700;
     transition: ${transitions.defaultTransition};
