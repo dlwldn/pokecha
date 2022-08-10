@@ -5,7 +5,10 @@
 
 <h3 align='center'>Website: https://stately-marzipan-5df473.netlify.app/</h3>
 
-![image](https://user-images.githubusercontent.com/54323527/183843208-92f7d8f2-eeea-46c9-98e1-b43d63e53e3e.jpg)
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/54323527/183843208-92f7d8f2-eeea-46c9-98e1-b43d63e53e3e.jpg" alt="지우의 각오" />
+</div>
+
 
 ## `Tech Stack`
 
