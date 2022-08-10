@@ -32,8 +32,7 @@ const ListModeButtons = ({ value, onClick }: Props) => {
 export default ListModeButtons;
 
 const ButtonsWrapper = styled.div`
-    padding: 20px 25px 0;
-    text-align: right;
+    display: inline-block;
 `;
 const Button = styled.button<{ isActive: boolean }>`
     font-weight: 700;

@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle`
     ${reset}
     * {
         box-sizing: border-box;
+        -webkit-tap-highlight-color : transparent;
     }
     body {
         font-family: 'Noto Sans KR', sans-serif;
@@ -20,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
         border: none;
         cursor: pointer;
     }
+    
 `
 
 export default GlobalStyle;

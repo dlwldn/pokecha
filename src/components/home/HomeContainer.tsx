@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import styled from "styled-components";
 import useDebounce from "../../hooks/useDebounce";
 import { DEFAULT_POKEMON_KOREAN_LANGUAGE_ID, DEFAULT_POKEMON_LIST_LIMIT_COUNT } from "../../lib/constant";
 import pokemonLangList from "../../lib/lang_list.json";
@@ -11,7 +10,7 @@ type Props = {};
 
 const HomeContainer = (props: Props) => {
     const [keyword, setKeyword] = useState("");
-    const [searchItems, setSearchItems] = useState<number[]>([]);
+    const [searchPokemonIdList, setSearchPokemonIdList] = useState<number[]>([]);
     const [currentFilter, setCurrentFilter] = useState<string[]>([]);
     const debounceKeyword = useDebounce(keyword);
 
@@ -35,7 +34,7 @@ const HomeContainer = (props: Props) => {
 
     useEffect(() => {
         if (debounceKeyword === "") return;
-        setSearchItems(
+        setSearchPokemonIdList(
             pokemonLangList
                 .filter(
                     (item) =>
@@ -58,7 +57,7 @@ const HomeContainer = (props: Props) => {
             <PokemonList
                 pokemonIdList={
                     debounceKeyword
-                        ? searchItems
+                        ? searchPokemonIdList
                         : Array.from({
                               length: DEFAULT_POKEMON_LIST_LIMIT_COUNT,
                           }).map((_, idx) => idx + 1)

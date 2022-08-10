@@ -15,7 +15,6 @@ import PokemonCard from "./PokemonCard";
 type Prop = {
     pokemonIdList: number[];
     filterTypes?: string[];
-    isNotUsedInfinite?: boolean;
     PokemonShowMode?: PokemonShowMode;
 };
 export type PokemonShowMode =

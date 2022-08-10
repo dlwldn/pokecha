@@ -6,15 +6,17 @@ import Filter from "../common/Filter";
 import SearchInput from "../common/SearchInput";
 import PokemonList, { PokemonShowMode } from "../home/PokemonList";
 import pokemonLangList from "../../lib/lang_list.json";
-import { DEFAULT_POKEMON_KOREAN_LANGUAGE_ID } from "../../lib/constant";
+import { DEFAULT_POKEMON_KOREAN_LANGUAGE_ID, DEFAULT_POKEMON_MAX_ID } from "../../lib/constant";
 import ListModeButtons from "./ListModeButtons";
+import styled from "styled-components";
+import PokemonCount from "./PokemonCount";
 
 type Props = {};
 
 const MyPageContainer = (props: Props) => {
     const [userClientState, _] = useRecoilState(userState);
     const [keyword, setKeyword] = useState<string>("");
-    const [searchItems, setSearchItems] = useState<number[]>(
+    const [pokemonIdList, setPokemonIdList] = useState<number[]>(
         userClientState.pokemonIdList
     );
     const [currentFilter, setCurrentFilter] = useState<string[]>([]);
@@ -44,7 +46,7 @@ const MyPageContainer = (props: Props) => {
     };
 
     useEffect(() => {
-        setSearchItems(
+        setPokemonIdList(
             userClientState.pokemonIdList
                 .filter((item) =>
                     pokemonLangList
@@ -70,9 +72,16 @@ const MyPageContainer = (props: Props) => {
                 onClear={onClearKeyword}
             />
             <Filter value={currentFilter} onClick={onClickFilter} />
-            <ListModeButtons value={showMode} onClick={onClickChangeMode} />
+            <Util>
+                <PokemonCount
+                    value={userClientState.pokemonIdList.length}
+                    total={DEFAULT_POKEMON_MAX_ID}
+                    hideTotalCount={showMode === "collectionActive"}
+                />
+                <ListModeButtons value={showMode} onClick={onClickChangeMode} />
+            </Util>
             <PokemonList
-                pokemonIdList={searchItems}
+                pokemonIdList={pokemonIdList}
                 filterTypes={currentFilter}
                 PokemonShowMode={debounceKeyword ? "find" : showMode}
             />
@@ -81,3 +90,10 @@ const MyPageContainer = (props: Props) => {
 };
 
 export default MyPageContainer;
+
+const Util = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 25px 0;
+`;

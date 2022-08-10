@@ -48,6 +48,8 @@ const BreadImage = styled.img<{ isReadyBread: boolean }>`
     top: 0;
     visibility: ${({ isReadyBread }) => (isReadyBread ? "visible" : "hidden")};
     opacity: ${({ isReadyBread }) => (isReadyBread ? 1 : 0)};
+    max-width: 700px;
+    width: 100%;
 
     cursor: pointer;
     :hover {

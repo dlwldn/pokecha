@@ -25,4 +25,7 @@ const HeaderWrapper = styled.header`
     top: 0;
     background-color: ${palette.white};
     z-index: 5;
+    > img {
+        width: 88px;
+    }
 `;

@@ -1,3 +1,4 @@
+import palette from "../../style/palette"
 import { PokemonBreadType } from "../constant"
 
 export const changeTypeName = (typeName: string): string => {
@@ -46,4 +47,12 @@ export const changeTypeName = (typeName: string): string => {
 export const getRandomBread = (breads: PokemonBreadType[]): PokemonBreadType => {
     const randomIndex = Math.floor(Math.random() * breads.length);
     return breads[randomIndex];
+}
+
+export const getPokemonPercentColor = (percent: number) => {
+    if(percent === 1) return palette.black;
+    if(percent > 0.8) return palette.grass;
+    if(percent > 0.5) return palette.water;
+    if(percent > 0.3) return palette.electric;
+    if(percent >= 0) return palette.red;
 }

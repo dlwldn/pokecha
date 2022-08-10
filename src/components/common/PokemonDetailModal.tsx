@@ -1,9 +1,9 @@
-import { useState } from "react";
 import Slider, { Settings } from "react-slick";
 import { useRecoilValue } from "recoil";
 import styled, { css } from "styled-components";
 import { POKEMON_FILTER_LIST } from "../../lib/constant";
 import { modalState } from "../../lib/store/client/modal";
+import media from "../../style/media";
 import palette from "../../style/palette";
 import FilterTag from "./FilterTag";
 
@@ -85,10 +85,17 @@ const SliderWrapper = styled.div`
     .slick-prev {
         width: 100px;
         height: 100px;
+        ${media.large} {
+            width: 50px;
+            height: 50px;
+        }
     }
     .slick-prev:before,
     .slick-next:before {
         font-size: 100px;
+        ${media.large} {
+            font-size: 50px;
+        }
     }
 `;
 const CarouselContent = styled.div`
@@ -97,9 +104,17 @@ const CarouselContent = styled.div`
     align-items: center;
     height: 100%;
 
+    ${media.large} {
+        flex-direction: column;
+    }
+
     img {
         width: 100%;
         max-width: 475px;
+
+        ${media.custom(1350)} {
+            max-width: 350px;
+        }
     }
 `;
 const ImageWrapper = styled.div`
@@ -121,9 +136,15 @@ const InfoWrapper = styled.div`
     }
     h3 {
         font-size: 45px;
+        ${media.small} {
+            font-size: 35px;
+        }
     }
     h3 {
         margin-bottom: 60px;
+        ${media.small} {
+            margin-bottom: 30px;
+        }
     }
     > div {
         display: flex;
@@ -131,6 +152,10 @@ const InfoWrapper = styled.div`
         > span {
             margin-right: 5px;
         }
+    }
+
+    ${media.small} {
+        font-size: 20px;
     }
 `;
 const PokemonNumber = styled.span<{ isNew: boolean }>`
@@ -150,4 +175,7 @@ const PokemonNumber = styled.span<{ isNew: boolean }>`
                 color: ${palette.red};
             }
         `}
+    ${media.small} {
+        font-size: 35px;
+    }
 `;
