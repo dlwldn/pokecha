@@ -35,7 +35,7 @@ const PokemonList = ({
         hasNextPage,
         fetchNextPage,
     } = usePokemonDetail(
-        PokemonShowMode !== 'collectionAll' 
+        PokemonShowMode !== "collectionAll"
             ? pokemonIdList
             : Array.from({
                   length: DEFAULT_POKEMON_LIST_LIMIT_COUNT,
@@ -112,7 +112,9 @@ const PokemonList = ({
                 pokemon={pokemon}
                 index={
                     PokemonShowMode === "collectionAll"
-                        ? pokemonIdList.indexOf(pokemon.id)
+                        ? filterTypes.length > 0
+                            ? idx
+                            : pokemonIdList.indexOf(pokemon.id)
                         : idx
                 }
             />
@@ -129,7 +131,7 @@ const PokemonList = ({
                 )}
             </List>
         );
-        
+
     if (pokemonList.length === 0) {
         return <EmptyData />;
     }

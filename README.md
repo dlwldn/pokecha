@@ -3,7 +3,13 @@
 <p align='center'> 포켓몬빵을 못사는 서러움을 풀고자 만들어낸 웹 사이트 '포켓챠' 입니다.
 띠부띠부씰을 원없이 모아보세요! </p>
 
-<h3 align='center'>Website: https://stately-marzipan-5df473.netlify.app/</h3>
+<div align='center'>
+  <h2>
+    <a href='https://stately-marzipan-5df473.netlify.app/' target='_blank'>
+      https://stately-marzipan-5df473.netlify.app/
+    </a>
+  </h2>
+</div>
 
 <div align="center">
   <img src="https://user-images.githubusercontent.com/54323527/183843208-92f7d8f2-eeea-46c9-98e1-b43d63e53e3e.jpg" alt="지우의 각오" />
