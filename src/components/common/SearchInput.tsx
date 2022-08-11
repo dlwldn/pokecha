@@ -11,10 +11,19 @@ type Props = {
 
 const SearchInput = ({ value, onClear, ...etc }: Props) => {
     return (
-        <SearchWrapper>
+        <SearchWrapper
+            onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                e.preventDefault();
+                (document.activeElement as HTMLElement).blur();
+            }}
+        >
             <InputWrapper>
                 <input type="text" value={value} {...etc} />
-                {onClear && value && <button onClick={onClear}>&times;</button>}
+                {onClear && value && (
+                    <button type="button" onClick={onClear}>
+                        &times;
+                    </button>
+                )}
             </InputWrapper>
         </SearchWrapper>
     );
@@ -22,7 +31,7 @@ const SearchInput = ({ value, onClear, ...etc }: Props) => {
 
 export default SearchInput;
 
-const SearchWrapper = styled.div`
+const SearchWrapper = styled.form`
     display: flex;
     justify-content: center;
     padding: 20px 0;
